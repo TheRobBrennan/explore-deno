@@ -26,6 +26,29 @@ Compile https://deno.land/std/examples/welcome.ts
 Welcome to Deno 🦕
 ```
 
+### Example: Hello World server
+
+If you would like to run the simple Hello World server example:
+
+```sh
+# Let's try running the server like this. Note we did not give Deno network access.
+$ deno run examples/hello-world-server.ts
+...
+error: Uncaught PermissionDenied: network access to "0.0.0.0:8000", run again with the --allow-net flag
+
+# Let's run our Deno server and view the example at http://localhost:8000/
+$ deno run --allow-net examples/hello-world-server.ts
+Compile file:///Users/rob/repos/explore-deno/examples/hello-world-server.ts
+🦕 server is now online at http://localhost:8000/
+Request #1: GET /
+Request #2: GET /
+Request #3: GET /
+Request #4: GET /
+Request #5: GET /
+Request #6: GET /
+^C
+```
+
 ## Resources
 
 [Deno 1.0](https://deno.land/v1) - This is the official announcement and release of Deno v1 on Wednesday, May 13th, 2020.
