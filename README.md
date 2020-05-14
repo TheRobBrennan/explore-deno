@@ -36,6 +36,9 @@ $ deno run examples/hello-world-server.ts
 ...
 error: Uncaught PermissionDenied: network access to "0.0.0.0:8000", run again with the --allow-net flag
 
+# BONUS: To see a full list of permissions with examples
+$ deno run -h
+
 # Let's run our Deno server and view the example at http://localhost:8000/
 $ deno run --allow-net examples/hello-world-server.ts
 Compile file:///Users/rob/repos/explore-deno/examples/hello-world-server.ts
