@@ -158,3 +158,7 @@ file:///Users/rob/repos/explore-deno/examples/01-deno-manual/chapter-06/test.ts
 ```
 
 Also of note is `deno doc` - a documentation generator for your code.
+
+## Chapter 08 - Embedding Deno
+
+> Deno consists of multiple parts, one of which is deno_core. This is a rust crate that can be used to embed a JavaScript runtime into your rust application. Deno is built on top of deno_core.
