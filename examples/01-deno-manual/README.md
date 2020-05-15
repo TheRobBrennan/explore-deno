@@ -96,3 +96,5 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (1ms)
 ```
+
+> You can also test asynchronous code by passing a test function that returns a promise. For this you can use the async keyword when defining a function
