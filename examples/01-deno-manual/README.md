@@ -98,3 +98,22 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (
 ```
 
 > You can also test asynchronous code by passing a test function that returns a promise. For this you can use the async keyword when defining a function
+
+### Resource and async op sanitizers
+
+> Certain actions in Deno create resources in the resource table (learn more here). These resources should be closed after you are done using them.
+
+> For each test definition the test runner checks that all resources created in this test have been closed. This is to prevent resource 'leaks'. This is enabled by default for all tests, but can be disabled by setting the sanitizeResources boolean to false in the test definition.
+
+> The same is true for async operation like interacting with the filesystem. The test runner checks that each operation you start in the test is completed before the end of the test. This is enabled by default for all tests, but can be disabled by setting the sanitizeOps boolean to false in the test definition.
+
+```js
+Deno.test({
+  name: "leaky test",
+  fn() {
+    Deno.open("hello.txt");
+  },
+  sanitizeResources: false,
+  sanitizeOps: false,
+});
+```
