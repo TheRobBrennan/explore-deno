@@ -167,16 +167,127 @@ Also of note is `deno doc` - a documentation generator for your code.
 
 ### Chapter 10.1 - Unix cat program
 
+In this program each command-line argument is assumed to be a filename, the file is opened, and printed to stdout.
+
+```js
+for (let i = 0; i < Deno.args.length; i++) {
+  let filename = Deno.args[i];
+  let file = await Deno.open(filename);
+  await Deno.copy(file, Deno.stdout);
+  file.close();
+}
+```
+
+```sh
+$ deno run --allow-read chapter-10/01-unix-cat.ts ./chapter-10/01-unix-cat.ts 
+```
+
+The copy() function here actually makes no more than the necessary kernel -> userspace -> kernel copies. That is, the same memory from which data is read from the file, is written to stdout. This illustrates a general design goal for I/O streams in Deno.
+
 ### Chapter 10.2 - File server
+
+This one serves a local directory in HTTP.
+
+```sh
+# Run the file_server from deno land with appropriate network and file read permissions
+$ deno run --allow-net --allow-read https://deno.land/std/http/file_server.ts .
+```
 
 ### Chapter 10.3 - TCP echo server
 
+This is an example of a simple server which accepts connections on port 8080, and returns to the client anything it sends.
+
+```js
+const listener = Deno.listen({ port: 8080 });
+console.log("listening on 0.0.0.0:8080");
+for await (const conn of listener) {
+  Deno.copy(conn, conn);
+}
+```
+
+```sh
+# Start the TCP server in one tab
+$ deno run --allow-net https://deno.land/std/examples/echo_server.ts
+
+# To test it, try sending data to it with netcat:
+$ nc localhost 8080
+```
+
+The copy() function here also does not make unnecessary memory copies. It receives a packet from the kernel and sends back, without further complexity.
+
 ### Chapter 10.4 - Creating a subprocess
+
+```sh
+# Here a function is assigned to window.onload. This function is called after the main script is loaded. 
+# This is the same as onload of the browsers, and it can be used as the main entrypoint.
+$ deno run --allow-run chapter-10/04-subprocess_simple.ts
+```
+
+```sh
+# By default when you use Deno.run() subprocess inherits stdin, stdout and stderr of parent process. If you want to communicate with started subprocess you can use "piped" option.
+$ deno run --allow-run chapter-10/04a-subprocess_process-communication.ts
+```
 
 ### Chapter 10.5 - Inspecting and revoking permissions
 
+This example has been intentionally omitted. It does make use of an unstable set of features in Deno, and for reference you can allow Deno to run those by simply passing in the `--unstable` flag.
+
 ### Chapter 10.6 - OS Signals
+
+This program makes use of an unstable Deno feature.
+
+You can use `Deno.signal()` function for handling OS signals:
+
+```js
+for await (const _ of Deno.signal(Deno.Signal.SIGINT)) {
+  console.log("interrupted!");
+}
+```
+
+`Deno.signal()` also works as a promise:
+
+```js
+await Deno.signal(Deno.Signal.SIGINT);
+console.log("interrupted!");
+```
+
+If you want to stop watching the signal, you can use `dispose()` method of the signal object:
+
+```js
+const sig = Deno.signal(Deno.Signal.SIGINT);
+setTimeout(() => {
+  sig.dispose();
+}, 5000);
+for await (const _ of sig) {
+  console.log("interrupted");
+}
+```
+
+The above for-await loop exits after 5 seconds when `sig.dispose()` is called.
 
 ### Chapter 10.7 - File system events
 
+To poll for file system events:
+
+```js
+const watcher = Deno.watchFs("/");
+for await (const event of watcher) {
+  console.log(">>>> event", event);
+  // { kind: "create", paths: [ "/foo.txt" ] }
+}
+```
+
+Note that the exact ordering of the events can vary between operating systems. This feature uses different syscalls depending on the platform:
++ Linux: inotify
++ macOS: FSEvents
++ Windows: ReadDirectoryChangesW
+
 ### Chapter 10.8 - Checking if file is main
+
+To test if the current script has been executed as the main input to the program check `import.meta.main`:
+
+```js
+if (import.meta.main) {
+  console.log("main");
+}
+```
