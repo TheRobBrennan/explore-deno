@@ -117,3 +117,17 @@ Deno.test({
   sanitizeOps: false,
 });
 ```
+
+### Ignoring tests
+
+> Sometimes you want to ignore tests based on some sort of condition (for example you only want a test to run on Windows). For this you can use the ignore boolean in the test definition. If it is set to true the test will be skipped.
+
+```js
+Deno.test({
+  name: "do macOS feature",
+  ignore: Deno.build.os !== "darwin",
+  fn() {
+    doMacOSFeature();
+  },
+});
+```
