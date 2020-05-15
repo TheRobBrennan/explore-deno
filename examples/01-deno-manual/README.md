@@ -162,3 +162,21 @@ Also of note is `deno doc` - a documentation generator for your code.
 ## Chapter 08 - Embedding Deno
 
 > Deno consists of multiple parts, one of which is deno_core. This is a rust crate that can be used to embed a JavaScript runtime into your rust application. Deno is built on top of deno_core.
+
+## Chapter 10 - Examples
+
+### Chapter 10.1 - Unix cat program
+
+### Chapter 10.2 - File server
+
+### Chapter 10.3 - TCP echo server
+
+### Chapter 10.4 - Creating a subprocess
+
+### Chapter 10.5 - Inspecting and revoking permissions
+
+### Chapter 10.6 - OS Signals
+
+### Chapter 10.7 - File system events
+
+### Chapter 10.8 - Checking if file is main
