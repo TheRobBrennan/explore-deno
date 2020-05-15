@@ -131,3 +131,9 @@ Deno.test({
   },
 });
 ```
+
+### Running tests
+
+> To run the test, call `deno test` with the file that contains your test function.
+
+> You can also omit the file name, in which case all tests in the current directory (recursively) that match the glob {*_,}test.{js,ts,jsx,tsx} will be run. If you pass a directory, all files in the directory that match this glob will be run.
