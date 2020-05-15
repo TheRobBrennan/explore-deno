@@ -137,3 +137,24 @@ Deno.test({
 > To run the test, call `deno test` with the file that contains your test function.
 
 > You can also omit the file name, in which case all tests in the current directory (recursively) that match the glob {*_,}test.{js,ts,jsx,tsx} will be run. If you pass a directory, all files in the directory that match this glob will be run.
+
+## Chapter 07 - Built-in tooling
+
+Let's use `deno info` to inspect dependencies for our example file in chapter 06:
+
+```sh
+$ deno info chapter-06/test.ts 
+Compile file:///Users/rob/repos/explore-deno/examples/01-deno-manual/chapter-06/test.ts
+local: /Users/rob/repos/explore-deno/examples/01-deno-manual/chapter-06/test.ts
+type: TypeScript
+compiled: /Users/rob/Library/Caches/deno/gen/file/Users/rob/repos/explore-deno/examples/01-deno-manual/chapter-06/test.ts.js
+map: /Users/rob/Library/Caches/deno/gen/file/Users/rob/repos/explore-deno/examples/01-deno-manual/chapter-06/test.ts.js.map
+deps:
+file:///Users/rob/repos/explore-deno/examples/01-deno-manual/chapter-06/test.ts
+  ├─┬ https://deno.land/std/testing/asserts.ts
+  │ ├── https://deno.land/std/fmt/colors.ts
+  │ └── https://deno.land/std/testing/diff.ts
+  └── https://deno.land/x/delay/delay.js
+```
+
+Also of note is `deno doc` - a documentation generator for your code.
