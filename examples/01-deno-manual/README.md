@@ -44,3 +44,9 @@ import { assertEquals, runTests, test } from "./deps.ts";
 ```
 
 > This design circumvents a plethora of complexity spawned by package management software, centralized code repositories, and superfluous file formats.
+
+## Chapter 05 - Standard library
+
+> Standard library is not yet stable and therefore it is versioned differently than Deno. For latest release consult [https://deno.land/std/](https://deno.land/std/) or [https://deno.land/std/version.ts](https://deno.land/std/version.ts).
+
+> We strongly suggest to always use imports with pinned version of standard library to avoid unintended changes.
